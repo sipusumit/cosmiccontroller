@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
-import { JSX } from 'preact';
 import '../App.css'; // Re-use your main variables
 
 interface DropdownOption {
