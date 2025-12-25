@@ -2,17 +2,32 @@
 
 **Cosmic Controller** (internally `cb_rgb`) is a cross-platform desktop application designed to control the RGB lighting effects of compatible keyboards (specifically targeted at Cosmic Byte devices). Built with the performance of **Rust** and the flexibility of **Tauri**, it features a lightweight **Preact** frontend.
 
-## 🚀 Features
+## 🚀 Features (TODO)
 
-* **Device Management**: Connect and disconnect from your supported keyboard seamlessly.
-* **Visual Interface**: Interactive visual representation of the keyboard layout.
-* **Lighting Effects**: Choose from over 10 preset lighting modes, including:
-    * Static, Breathe, Fade, Neon, Wave, Ripple, RainDrop, and more.
-* **Customization**:
-    * **Color Picker**: Select custom colors for specific effects.
-    * **Controls**: Adjust Brightness and Animation Speed.
-    * **Per-Key UI**: Interactive "paint" mode on the visual keyboard (dragging supported).
-* **Cross-Platform**: Built on Tauri for Windows and Linux support.
+### Device Management
+- [x]  Connect to supported keyboard
+- [ ]  Disconnect from keyboard safely
+
+### Visual Interface
+- [ ]  Interactive visual keyboard layout
+- [ ]  Real-time key highlighting
+ 
+### Lighting Effects
+- [x]  Static effect
+- [x]  Breathe effect
+- [x]  Fade effect
+- [x]  Neon effect
+- [x]  Wave effect
+- [x]  Ripple effect
+- [x]  RainDrop effect
+- [x]  Additional preset effects (10+ total)
+
+### Customization
+- [x]  Color picker for lighting effects
+- [x]  Brightness control
+- [x]  Animation speed control
+- [ ]  Per-key RGB UI
+- [ ]  Paint mode (click & drag on visual keyboard)
 
 ## 🛠️ Tech Stack
 
