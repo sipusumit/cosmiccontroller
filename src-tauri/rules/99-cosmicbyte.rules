@@ -1,0 +1,3 @@
+# Cosmic Byte RGB Keyboard Control
+#KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="a1cd", ATTRS{bInterfaceNumber}=="02", MODE="0666"
+KERNEL=="hidraw*", ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="a1cd", MODE="0666"

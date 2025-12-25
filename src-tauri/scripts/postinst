@@ -1,0 +1,5 @@
+#!/bin/bash
+# Reload udev rules to apply the new keyboard permissions immediately
+udevadm control --reload
+udevadm trigger
+exit 0

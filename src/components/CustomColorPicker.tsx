@@ -1,11 +1,14 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { JSX } from 'preact';
 import '../App.css';
+import { CbColor } from '../App';
+import { invoke } from '@tauri-apps/api/core';
 
 interface CustomColorPickerProps {
   label?: string;
   color: string; // Expecting Hex (e.g., "#00f3ff")
   onChange: (hex: string) => void;
+  onSwatchChange: (color: CbColor) => void
 }
 
 // --- Helpers ---
@@ -42,21 +45,34 @@ function hslToHex(h: number, s: number, l: number): string {
 }
 
 // Cyberpunk Presets
-const PRESETS = [
-  '#ff0000', // Red
-  '#ffae00', // Orange
-  '#ffff00', // Yellow
-  '#00ff00', // Green
-  '#00f3ff', // Cyan (Theme)
-  '#0000ff', // Blue
-  '#bc13fe', // Purple (Theme)
-  '#ff00ff', // Magenta
-  '#ffffff', // White
-  '#000000', // Off
+const PRESETS:{key: CbColor, value: string}[] = [
+  {key: "Color1", value:'#ff0000'}, // Red
+  {key: "Color2", value:'#ffae00'}, // Orange
+  {key: "Color3", value:'#ffff00'}, // Yellow
+  {key: "Color4", value:'#00ff00'}, // Green
+  {key: "Color5", value:'#00f3ff'}, // Cyan (Theme)
+  {key: "Color6", value:'#0000ff'}, // Blue
+  {key: "Color7", value:'#bc13fe'}, // Purple (Theme)
+  // {key: "Color", value:'#ff00ff'}, // Magenta
+  // {key: "Color", value:'#ffffff'}, // White
+  // {key: "Color", value:'#000000'}, // Off
 ];
 
-export function CustomColorPicker({ label, color, onChange }: CustomColorPickerProps) {
+type RGB = {red: number, green: number, blue: number};
+
+export function CustomColorPicker({ label, color, onChange, onSwatchChange }: CustomColorPickerProps) {
   const [hue, setHue] = useState(180);
+
+  useEffect(()=>{
+    invoke<Array<RGB>>("get_swatches").then((res) =>{
+      console.log(res)
+      res.forEach((v, idx)=>{
+        PRESETS[idx].value = rgbToHex(v.red, v.green, v.blue)
+      })
+    }).catch(err =>{
+      console.error(err)
+    })
+  }, [])
   
   // Parse current color prop into RGB numbers for the inputs
   const { r, g, b } = hexToRgb(color);
@@ -141,10 +157,10 @@ export function CustomColorPicker({ label, color, onChange }: CustomColorPickerP
       <div class="swatch-grid">
         {PRESETS.map((preset) => (
           <div 
-            key={preset}
-            class={`swatch ${color === preset ? 'active' : ''}`}
-            style={{ backgroundColor: preset }}
-            onClick={() => onChange(preset)}
+            key={preset.key}
+            class={`swatch ${color === preset.value ? 'active' : ''}`}
+            style={{ backgroundColor: preset.value }}
+            onClick={() => {onChange(preset.value);onSwatchChange(preset.key)}}
           />
         ))}
       </div>

@@ -390,12 +390,21 @@ dependencies = [
 name = "cb_rgb"
 version = "0.1.0"
 dependencies = [
+ "cbkbd",
  "hidapi",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-opener",
+]
+
+[[package]]
+name = "cbkbd"
+version = "0.1.0"
+dependencies = [
+ "hidapi",
+ "serde",
 ]
 
 [[package]]

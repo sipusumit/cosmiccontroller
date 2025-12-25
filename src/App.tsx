@@ -11,12 +11,26 @@ interface EffectOption { id: number; name: string; }
 interface KleKey { label: string; x: number; y: number; w: number; h: number; index: number; }
 
 const EFFECTS: EffectOption[] = [
-  { id: 0x00, name: 'Static' },
-  { id: 0x01, name: 'Breathing' },
-  { id: 0x06, name: 'Wave' },
-  { id: 0x07, name: 'Neon' },
-  { id: 0x08, name: 'Rain Drop' },
+  { id: 0, name: "Static" },
+  { id: 1, name: "Breathe" },
+  { id: 2, name: "Fade" },
+  { id: 3, name: "GettingOff" },
+  { id: 4, name: "LittleStars" },
+  { id: 5, name: "Laser" },
+  { id: 6, name: "Wave" },
+  { id: 7, name: "Neon" },
+  { id: 8, name: "RainDrop" },
+  { id: 9, name: "Ripple" },
+  { id: 10, name: "Wave2" },
+  { id: 11, name: "Swirl" },
+  // { id: 12, name: "USERDEFINE1" },
+  // { id: 13, name: "USERDEFINE2" },
+  // { id: 14, name: "USERDEFINE3" },
+  // { id: 15, name: "USERDEFINE4" },
+  // { id: 16, name: "USERDEFINE5" },
 ];
+
+
 
 function parseKleLayout(layout: any[]): KleKey[] {
   const keys: KleKey[] = [];
@@ -57,9 +71,20 @@ function parseKleLayout(layout: any[]): KleKey[] {
 
 const PARSED_KEYS = parseKleLayout(RAW_LAYOUT);
 
+export type CbColor = 
+    "Color1"|
+    "Color2"|
+    "Color3"|
+    "Color4"|
+    "Color5"|
+    "Color6"|
+    "Color7"|
+    "ColorLoop";
+
 export default function App() {
   const [connected, setConnected] = useState<boolean>(false);
   const [currentColor, setCurrentColor] = useState<string>('#00f3ff');
+  const [currentColorIdx, setCurrentColorIdx] = useState<CbColor>('Color2');
   const [brightness, setBrightness] = useState<number>(7);
   const [speed, setSpeed] = useState<number>(5);
   const [activeEffect, setActiveEffect] = useState<number>(0x00);
@@ -139,6 +164,8 @@ export default function App() {
 
   const applyGlobalEffect = async () => {
     console.log("Applying Global Effect:", activeEffect);
+    console.log("Applying Global Color:", currentColorIdx);
+    invoke("set_led_type", {effectIndex: activeEffect, brightness: brightness, speed: speed, color: currentColorIdx})
   };
 
   const clearMatrix = () => {
@@ -204,6 +231,7 @@ export default function App() {
             label="Active Color" 
             color={currentColor} 
             onChange={setCurrentColor} 
+            onSwatchChange={setCurrentColorIdx}
           />
         </div>
 

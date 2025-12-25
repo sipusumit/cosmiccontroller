@@ -1,0 +1,8 @@
+#!/bin/bash
+# src-tauri/scripts/postrm
+
+# Reload udev rules to make the system realize the file is gone
+udevadm control --reload
+udevadm trigger
+
+exit 0
